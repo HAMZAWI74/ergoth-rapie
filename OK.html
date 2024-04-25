@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application pour l'ergothérapie</title>
+</head>
+<body>
+    <header>
+        <h1>Application pour l'ergothérapie</h1>
+    </header>
+    <main>
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" id="fileInput">
+            <button type="submit" name="submit">Envoyer</button>
+        </form>
+
+        <?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+            $file_name = $_FILES['file']['name'];
+            $file_size = $_FILES['file']['size'];
+            $file_tmp = $_FILES['file']['tmp_name'];
+            $file_type = $_FILES['file']['type'];
+
+            if ($file_tmp != "") {
+                move_uploaded_file($file_tmp, $file_name);
+                // Ici, vous pouvez ajouter du code pour traiter le fichier téléchargé
+                echo "Fichier téléchargé avec succès.";
+            } else {
+                echo "Erreur lors du téléchargement du fichier.";
+            }
+        }
+        ?>
+    </main>
+</body>
+</html>
